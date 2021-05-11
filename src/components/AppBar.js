@@ -13,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 // Actions
 import { openDrawer, closeDrawer } from '../redux/Drawer/drawer.actions.toggle';
+import { resetSearch, searchById } from '../redux/Cve/cve.actions.filter';
 
 export default function AppBarWithSearch() {
   const styles = useStyles();
@@ -24,6 +25,14 @@ export default function AppBarWithSearch() {
       dispatch(closeDrawer());
     } else {
       dispatch(openDrawer());
+    }
+  }
+
+  function handleSearch(e) {
+    if (e.target.value.length < 1) {
+      dispatch(resetSearch());
+    } else {
+      dispatch(searchById(e.target.value));
     }
   }
 
@@ -50,6 +59,7 @@ export default function AppBarWithSearch() {
               root: styles.inputRoot,
               input: styles.inputInput,
             }}
+            onChange={handleSearch}
           />
         </div>
         <div className={styles.grow} />

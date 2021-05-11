@@ -15,6 +15,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { closeDrawer } from '../redux/Drawer/drawer.actions.toggle';
 import YearSelect from './input/YearSelect';
 import SeverityCheckboxes from './input/SeverityCheckboxes';
+import { resetAll } from '../redux/Cve/cve.actions.filter';
 
 const drawerWidth = 240;
 
@@ -48,14 +49,13 @@ export default function SideDrawer() {
           SELECT SEVERITY
         </Typography>
         <SeverityCheckboxes />
-        <div className={styles.btn_row}>
-          <Button variant="outlined" color="secondary">
-            Reset
-          </Button>
-          <Button variant="outlined" color="secondary">
-            Apply
-          </Button>
-        </div>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => dispatch(resetAll())}
+        >
+          Reset
+        </Button>
       </div>
     </Drawer>
   );

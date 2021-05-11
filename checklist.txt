@@ -1,0 +1,19 @@
+[X] UI
+  [X] Appbar
+  [X] Drawer
+  [X] Shift content when drawer open
+  [X] Add search field
+  [X] Year select
+  [X] Severity checkboxes
+  [X] Reset button
+  [X] Apply button
+  [X] Data grid with pagination
+  [X] Line chart 
+[X] Fetch CVE from API
+[X] Dynamically populate Select menu with years
+[ ] Function with any given CVE.json?
+[X] Search CVE by ID
+[X] Reset filters, tables, and chart using button
+[X] Year select reflect on chart
+[ ] Document application
+[ ] Containerise using Docker

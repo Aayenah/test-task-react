@@ -1,53 +1,41 @@
 import { BASE_URL } from '../../config/api';
-import { logoutUser } from '../User/user.actions.logout';
-import * as ACTIONS from './product.types';
+import * as ACTIONS from './cve.types';
+import { fetchYears } from './cve.actions.get.years';
 
-export function fetchProductsRequest() {
+export function fetchCvesRequest() {
   return {
-    type: ACTIONS.FETCH_PRODUCTS_REQUEST,
+    type: ACTIONS.FETCH_CVES_REQUEST,
   };
 }
 
-export function fetchProductsSuccess(products) {
+export function fetchCvesSuccess(cves) {
   return {
-    type: ACTIONS.FETCH_PRODUCTS_SUCCESS,
-    payload: products,
+    type: ACTIONS.FETCH_CVES_SUCCESS,
+    payload: cves,
   };
 }
 
-export function fetchProductsFailure(error) {
+export function fetchCvesFailure(error) {
   return {
-    type: ACTIONS.FETCH_PRODUCTS_FAILURE,
+    type: ACTIONS.FETCH_CVES_FAILURE,
     payload: error,
   };
 }
 
-export function fetchProducts() {
+export function fetchCves() {
   return async (dispatch) => {
-    dispatch(fetchProductsRequest());
+    dispatch(fetchCvesRequest());
     try {
-      const res = await fetch(`${BASE_URL}/products/find`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
+      const res = await fetch(`${BASE_URL}/cves`);
       if (res.ok) {
         const data = await res.json();
-        dispatch(fetchProductsSuccess(data));
+        dispatch(fetchCvesSuccess(data));
+        dispatch(fetchYears());
       } else {
-        const json = await res.json();
-        if (json.message.includes('Invalid token')) {
-          dispatch(logoutUser());
-        } else {
-          throw new Error(json.message);
-        }
+        throw new Error('Failed to fetch CVEs');
       }
     } catch (error) {
-      if (error.toString().includes('TypeError')) {
-        dispatch(fetchProductsFailure('Failed to connect to server'));
-      } else {
-        dispatch(fetchProductsFailure(error));
-      }
+      dispatch(fetchCvesFailure(error));
     }
   };
 }

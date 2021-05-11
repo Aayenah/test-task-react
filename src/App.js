@@ -1,10 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
+// Actions
+import { fetchCves } from './redux/Cve/cve.actions.get';
+
+// Pages
 import HomePage from './pages/HomePage';
 import LoadingPage from './pages/LoadingPage';
 import SideDrawer from './components/SideDrawer';
@@ -14,9 +18,10 @@ export default function App() {
   const styles = useStyles();
   const loading = useSelector((state) => state.cve.loading);
   const drawerOpen = useSelector((state) => state.drawer.open);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    // dispatch(getOperator());
+    dispatch(fetchCves());
   }, []);
 
   if (loading) {

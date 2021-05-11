@@ -1,21 +1,40 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem } from '@material-ui/core';
+import { selectYear } from '../../redux/Cve/cve.actions.get.years';
 
 export default function YearSelect() {
-  <InputLabel id="select-year">Year</InputLabel>;
+  const years = useSelector((state) => state.cve.years);
+  const selected = useSelector((state) => state.cve.selectedYear);
+  const dispatch = useDispatch();
+
+  const item = years.map((y) => (
+    <MenuItem key={y} value={y}>
+      {y}
+    </MenuItem>
+  ));
+
   return (
     <Select
       labelId="select-year"
       variant="outlined"
       color="secondary"
-      value={2017}
-      // onChange={handleChange}
+      value={selected}
+      MenuProps={{
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'left',
+        },
+        transformOrigin: {
+          vertical: 'top',
+          horizontal: 'left',
+        },
+        getContentAnchorEl: null,
+      }}
+      onChange={(e) => dispatch(selectYear(e.target.value))}
     >
-      <MenuItem value={2017}>2017</MenuItem>
-      <MenuItem value={2018}>2018</MenuItem>
-      <MenuItem value={2019}>2019</MenuItem>
-      <MenuItem value={2020}>2020</MenuItem>
+      {item}
     </Select>
   );
 }
