@@ -6,18 +6,14 @@ import * as ACTIONS from './cve.types';
 const INITIAL_STATE = {
   loading: false,
   data: [],
-  tableData: [],
+  displayData: [],
   error: '',
-  success: '',
   minorVisible: true,
   majorVisible: true,
   criticalVisible: true,
   years: [],
   selectedYear: 'none',
   selectedYearData: [],
-  minorData: [],
-  majorData: [],
-  criticalData: [],
 };
 
 function reducer(state = INITIAL_STATE, action) {
@@ -33,7 +29,7 @@ function reducer(state = INITIAL_STATE, action) {
         ...state,
         loading: false,
         data: action.payload,
-        tableData: action.payload.CVE_Items,
+        displayData: action.payload.CVE_Items,
         error: '',
       };
     case ACTIONS.FETCH_CVES_FAILURE:
@@ -41,7 +37,7 @@ function reducer(state = INITIAL_STATE, action) {
         ...state,
         loading: false,
         data: [],
-        tableData: [],
+        displayData: [],
         error: action.payload.toString(),
       };
     //* FETCH YEARS *//
@@ -69,7 +65,7 @@ function reducer(state = INITIAL_STATE, action) {
     case ACTIONS.SEARCH_BY_ID:
       return {
         ...state,
-        tableData: state.data.CVE_Items.filter((i) =>
+        selectedYearData: state.displayData.filter((i) =>
           i.cve.CVE_data_meta.ID.toLowerCase().includes(
             action.payload.toLowerCase(),
           ),
@@ -79,14 +75,16 @@ function reducer(state = INITIAL_STATE, action) {
     case ACTIONS.RESET_SEARCH:
       return {
         ...state,
-        tableData: state.data.CVE_Items,
+        selectedYearData: state.displayData.filter(
+          (i) => moment(i.publishedDate).year() === state.selectedYear,
+        ),
       };
     // SELECT YEAR
     case ACTIONS.SELECT_YEAR:
       return {
         ...state,
         selectedYear: action.payload,
-        selectedYearData: state.tableData.filter(
+        selectedYearData: state.displayData.filter(
           (i) => moment(i.publishedDate).year() === action.payload,
         ),
       };
@@ -112,7 +110,10 @@ function reducer(state = INITIAL_STATE, action) {
     case ACTIONS.RESET_ALL:
       return {
         ...state,
-        tableData: state.data.CVE_Items,
+        displayData: state.data.CVE_Items,
+        selectedYearData: state.displayData.filter(
+          (i) => moment(i.publishedDate).year() === state.selectedYear,
+        ),
         minorVisible: true,
         majorVisible: true,
         criticalVisible: true,

@@ -22,7 +22,7 @@ const drawerWidth = 240;
 export default function SideDrawer() {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const open = useSelector((state) => state.drawer.open);
+  const open = useSelector((state) => state.drawer.open); // is drawer open
 
   return (
     <Drawer
@@ -61,6 +61,7 @@ export default function SideDrawer() {
   );
 }
 
+//* some of the styling was provided by MUI docs
 const useStyles = makeStyles((theme) => ({
   drawer: {
     flexShrink: 0,

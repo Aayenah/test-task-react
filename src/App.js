@@ -21,16 +21,19 @@ export default function App() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    // on app start, fetch CVE data
     dispatch(fetchCves());
   }, []);
 
   if (loading) {
+    // fetching data...
     return <LoadingPage />;
   }
 
   return (
     <div
       className={clsx(styles.container, {
+        // change class when drawer is open to shift content
         [styles.containerShift]: drawerOpen,
       })}
     >
@@ -47,18 +50,9 @@ export default function App() {
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    // backgroundColor: 'pink',
     backgroundColor: theme.custom.contentBackground,
   },
   containerShift: {
     marginLeft: 240,
-  },
-  content: {
-    // marginLeft: '15rem',
-    // paddingTop: '2rem',
-    // paddingBottom: '2rem',
-    // paddingRight: 0,
-    // paddingLeft: 0,
-    // backgroundColor: 'brown',
   },
 }));

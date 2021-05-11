@@ -3,7 +3,6 @@
 import React from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   ResponsiveContainer,
   LineChart,
@@ -16,15 +15,17 @@ import {
 
 export default function CveChart() {
   const selectedYearData = useSelector((state) => state.cve.selectedYearData);
-  const minorVisible = useSelector((state) => state.cve.minorVisible);
-  const majorVisible = useSelector((state) => state.cve.majorVisible);
-  const criticalVisible = useSelector((state) => state.cve.criticalVisible);
-  const monthData = [{ jan: {} }];
+  const minorVisible = useSelector((state) => state.cve.minorVisible); // linked to checkbox
+  const majorVisible = useSelector((state) => state.cve.majorVisible); // linked to checkbox
+  const criticalVisible = useSelector((state) => state.cve.criticalVisible); // linked to checkbox
 
-  selectedYearData.forEach((i) => {
-    monthData.splice(moment(i.publishedDate).month(), 0, i);
-  });
-
+  /**
+   * Generates an list of CVEs in a particular month of
+   * currently selected year (global state) and severity
+   * @param {int} month [0-11]
+   * @param {string} severity 'LOW' | 'MEDIUM' | 'HIGH'
+   * @returns {array}
+   */
   function getDataforMonth(month, severity) {
     return selectedYearData.filter(
       (i) =>
@@ -33,6 +34,14 @@ export default function CveChart() {
     );
   }
 
+  /**
+   * List of data for chart. Property names should
+   * match those inside LineChart component
+   * month: xAxis label
+   * minor: minor severity count
+   * major: major severity count
+   * critical: critical severity count
+   */
   const data = [
     {
       month: 'Jan',
@@ -124,6 +133,7 @@ export default function CveChart() {
           iconType="circle"
         />
         <CartesianGrid stroke="#f5f5f5" />
+        {/* Enable/disable Line based on current checkboxes state */}
         {minorVisible && (
           <Line type="monotone" dataKey="minor" stroke="#387908" yAxisId={0} />
         )}
@@ -138,6 +148,7 @@ export default function CveChart() {
             yAxisId={2}
           />
         )}
+        {/*  */}
       </LineChart>
     </ResponsiveContainer>
   );

@@ -23,7 +23,7 @@ export default function SeverityCheckboxes() {
         control={
           <Checkbox
             name="minor"
-            checked={minorVisible}
+            checked={minorVisible} // binds to global state
             onChange={(e) => dispatch(toggleMinorData(e.target.checked))}
           />
         }
@@ -33,7 +33,7 @@ export default function SeverityCheckboxes() {
         control={
           <Checkbox
             name="major"
-            checked={majorVisible}
+            checked={majorVisible} // binds to global state
             onChange={(e) => dispatch(toggleMajorData(e.target.checked))}
           />
         }
@@ -43,7 +43,7 @@ export default function SeverityCheckboxes() {
         control={
           <Checkbox
             name="critical"
-            checked={criticalVisible}
+            checked={criticalVisible} // binds to global state
             onChange={(e) => dispatch(toggleCriticalData(e.target.checked))}
           />
         }

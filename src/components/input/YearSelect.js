@@ -9,6 +9,8 @@ export default function YearSelect() {
   const selected = useSelector((state) => state.cve.selectedYear);
   const dispatch = useDispatch();
 
+  // map years array into MenuItem components
+  // to display in menu
   const item = years.map((y) => (
     <MenuItem key={y} value={y}>
       {y}
@@ -20,8 +22,9 @@ export default function YearSelect() {
       labelId="select-year"
       variant="outlined"
       color="secondary"
-      value={selected}
+      value={selected} // binds to global state
       MenuProps={{
+        // anchors popover menu to appear under Select
         anchorOrigin: {
           vertical: 'bottom',
           horizontal: 'left',
@@ -32,6 +35,7 @@ export default function YearSelect() {
         },
         getContentAnchorEl: null,
       }}
+      // dispatch an action to change currently selected year
       onChange={(e) => dispatch(selectYear(e.target.value))}
     >
       {item}

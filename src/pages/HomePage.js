@@ -21,7 +21,7 @@ export default function HomePage() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     marginBottom: '1rem',
-    // backgroundColor: 'pink',
   },
   graph: {
     display: 'flex',
@@ -58,6 +57,5 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    // backgroundColor: 'maroon',
   },
 }));
