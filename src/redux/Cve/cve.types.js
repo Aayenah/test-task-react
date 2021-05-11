@@ -1,0 +1,5 @@
+//* Async actions
+export const FETCH_CVES_REQUEST = 'FETCH_CVES_REQUEST';
+export const FETCH_CVES_SUCCESS = 'FETCH_CVES_SUCCESS';
+export const FETCH_CVES_FAILURE = 'FETCH_CVES_FAILURE';
+//
